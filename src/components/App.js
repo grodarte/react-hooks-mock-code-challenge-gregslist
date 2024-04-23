@@ -26,15 +26,20 @@ function App() {
     setSortAtoZ(sortList)
     if(sortList){
       const sortedList = listings.sort((a,b)=> a.description.localeCompare(b.description))
-      console.log(sortedList)
       setListings(sortedList)
     } else {
       const unsortedList = listings.sort((a,b)=> a.id - b.id)
-      console.log(unsortedList)
       setListings(unsortedList)
     }
   }
 
+  function handleSubmitNewItem(newItem){
+    const newList = [
+      ...listings,
+      newItem
+    ]
+    setListings(newList)
+  }
   
 
   return (
@@ -44,7 +49,7 @@ function App() {
         listings={
           listings.filter(listing=>listing.description.toLowerCase().includes(searchedItem))
         } 
-        onDeleteItem={handleDeleteItem}/>
+        onDeleteItem={handleDeleteItem} onSubmitNewItem={handleSubmitNewItem}/>
     </div>
   );
 }
