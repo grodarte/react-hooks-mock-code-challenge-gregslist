@@ -4,12 +4,17 @@ import ListingsContainer from "./ListingsContainer";
 
 function App() {
   const [items, setItems] = useState([])
+  const [searchBy, setSearchBy] = useState("")
 
-  console.log(items)
+  const displayItems = items.filter(item=>item.description.toLowerCase().includes(searchBy))
 
   function handleDeleteItem(deletedItem){
     const updatedItems = items.filter(item=>item.id !== deletedItem.id)
     setItems(updatedItems)
+  }
+
+  function handleSearchSubmit(search){
+    setSearchBy(search.toLowerCase())
   }
 
   useEffect(()=>{
@@ -20,8 +25,8 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
-      <ListingsContainer itemData={items} onDeleteItem={handleDeleteItem}/>
+      <Header onSearchSubmit={handleSearchSubmit}/>
+      <ListingsContainer itemData={displayItems} onDeleteItem={handleDeleteItem}/>
     </div>
   );
 }
